@@ -10,16 +10,13 @@ import java.util.List;
 public class SRTFController {
 
     public String algorithmName;
-    private Result SRTFResult= new Result("SRTF algorith");
+    private Result SRTFResult = new Result("SRTF algorith");
     public List<GanttBlock> ganttChartList;
     private List<Process> SRTFProcesses;
 
     public SRTFController(List<Process> processes) {
         this.SRTFProcesses = processes;
     }
-
-
-
 
 
     public Result buildResult() {
@@ -145,6 +142,7 @@ public class SRTFController {
 
         return SRTFResult;
     }
+
     public void calculateMetrics() {
         if (SRTFProcesses == null || SRTFProcesses.isEmpty()) return;
         int n = SRTFProcesses.size();
