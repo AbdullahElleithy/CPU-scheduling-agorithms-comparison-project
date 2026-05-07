@@ -15,7 +15,31 @@ public class RRController {
         RRProcesses = processes;
         RRQuantum = quantum;
     }
+    public void setResponseTime(Process p, int blockStart) {
+        p.responseTime = blockStart - p.arrivalTime;
+        return;
+    }
 
+    public void setTurnAroundTime(Process p, int completion) {
+        p.turnAroundTime = completion - p.arrivalTime;
+    }
+
+    public void setWaitingTime(Process p) {
+        p.waitingTime = p.turnAroundTime - p.burstTime;
+    }
+
+    public Process getFirstProcess() {
+        Process min = null;
+
+        for (Process p : RRProcesses) {
+
+            if (min == null || p.arrivalTime < min.arrivalTime) {
+                min = p;
+            }
+        }
+
+        return min;
+    }
 
 
 
