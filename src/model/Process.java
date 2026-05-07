@@ -9,6 +9,8 @@ public class Process {
     public int turnAroundTime = 0;
     public int waitingTime = 0;
     public int responseTime = 0;
+    public int finish;
+    public int firstStart;
 
     public Process(String id, int arrivalTime, int burstTime) {
         this.id = id;
