@@ -10,7 +10,7 @@ import java.util.List;
 public class SRTFController {
 
     public String algorithmName;
-    private Result SRTFResult= new Result("SRTF algorith");
+    private Result SRTFResult = new Result("SRTF algorith");
     public List<GanttBlock> ganttChartList;
     private List<Process> SRTFProcesses;
 
@@ -18,9 +18,7 @@ public class SRTFController {
         this.SRTFProcesses = processes;
     }
 
-    public void calculateMetrics() {
 
-    }
     public Result buildResult() {
 
         int n = SRTFProcesses.size();
@@ -143,4 +141,24 @@ public class SRTFController {
         SRTFResult.processes = SRTFProcesses;
 
         return SRTFResult;
-    }}
+    }
+
+    public void calculateMetrics() {
+        if (SRTFProcesses == null || SRTFProcesses.isEmpty()) return;
+        int n = SRTFProcesses.size();
+        double totalWT = 0;
+        double totalTAT = 0;
+        double totalRT = 0;
+        for (Process p : SRTFProcesses) {
+            p.turnAroundTime = p.finish - p.arrivalTime;
+            p.waitingTime = p.turnAroundTime - p.burstTime;
+            p.responseTime = p.firstStart - p.arrivalTime;
+            totalWT += p.waitingTime;
+            totalTAT += p.turnAroundTime;
+            totalRT += p.responseTime;
+        }
+        SRTFResult.avgWaitingTime = totalWT / n;
+        SRTFResult.avgTurnaroundTime = totalTAT / n;
+        SRTFResult.avgResponseTime = totalRT / n;
+    }
+}
