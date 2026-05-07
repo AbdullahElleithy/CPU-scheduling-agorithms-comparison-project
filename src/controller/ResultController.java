@@ -115,7 +115,7 @@ public class ResultController {
             block.setPrefHeight(60);
             block.setStyle("-fx-border-color: black;");
             Label name;
-            name = new Label(b.process.id);
+            name = new Label(b.myProcess.id);
             block.getChildren().add(name);
             StackPane.setAlignment(name, Pos.CENTER);
             ganttBox.getChildren().add(block);
