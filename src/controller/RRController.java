@@ -79,7 +79,81 @@ public class RRController {
         RRResult.avgResponseTime = sumRT / RRProcesses.size();
     }
 
+
+    public List<GanttBlock> buildGanttChart() {
+
+        List<GanttBlock> chart = new ArrayList<>();
+
+
+        GanttBlock previous = null;
+
+
+        Process firstProcess = getFirstProcess();
+
+        GanttBlock currentBlock = new GanttBlock(
+                firstProcess,
+                firstProcess.arrivalTime,
+                0
+        );
+
+
+        while (true) {
+
+            Process currentProcess = currentBlock.myProcess;
+
+            int STMTRemaining = currentProcess.remainingTime;
+
+
+            if (currentProcess.remainingTime >RRQuantum) {
+
+                currentProcess.remainingTime =
+                        currentProcess.remainingTime - RRQuantum;
+
+                currentBlock.end = currentBlock.start + RRQuantum;
+
+            } else {
+
+                currentBlock.end =
+                        currentBlock.start + currentProcess.remainingTime;
+
+                currentProcess.remainingTime = 0;
+
+                setTurnAroundTime(currentProcess, currentBlock.end);
+                setWaitingTime(currentProcess);
+            }
+
+            chart.add(currentBlock);
+
+
+            if (STMTRemaining == currentProcess.burstTime) {
+                setResponseTime(currentProcess, currentBlock.start);
+            }
+
+
+            Process next = getNextProcess(currentProcess);
+
+            if (next != null) {
+
+                previous = currentBlock;
+
+                currentBlock = new GanttBlock(
+                        next,
+                        previous.end,
+                        0
+                );
+
+            } else {
+                break;
+            }
+        }
+
+        return chart;
+    }
+
     public Result buildResult() {
+
+        RRResult.ganttBlocks = buildGanttChart();
+        calculateAVGs();
 
 
 
