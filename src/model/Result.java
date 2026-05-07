@@ -12,6 +12,8 @@ public class Result {
     public double avgTurnaroundTime;
     public double avgResponseTime;
 
+    public String conclusion;
+
     public Result(String algorithmName) {
         this.algorithmName = algorithmName;
     }
