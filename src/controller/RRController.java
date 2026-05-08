@@ -5,16 +5,17 @@ import model.Result;
 import model.GanttBlock;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
 
 public class RRController {
     private List<Process> RRProcesses;
     private int RRQuantum;
     private Result RRResult = new Result("Round Roubin algorithm");
-
     public RRController(List<Process> processes, int quantum) {
         RRProcesses = processes;
         RRQuantum = quantum;
     }
+    
     public void setResponseTime(Process p, int blockStart) {
         p.responseTime = blockStart - p.arrivalTime;
         return;
@@ -25,41 +26,42 @@ public class RRController {
     public void setWaitingTime(Process p) {
         p.waitingTime = p.turnAroundTime - p.burstTime;
     }
-    public Process getFirstProcess() {
-        Process min = null;
 
-        for (Process p : RRProcesses) {
-
-            if (min == null || p.arrivalTime < min.arrivalTime) {
-                min = p;
-            }
-        }
-
-        return min;
+    public void sortProcessesByArrival() {
+        RRProcesses.sort(Comparator.comparingInt(p -> p.arrivalTime));
     }
+    public Process getNextProcess(GanttBlock currentBlock) {
 
-    public Process getNextProcess(Process current) {
+        Process current = currentBlock.myProcess;
+        int currentTime = currentBlock.end;
+
         Process best = null;
         Process bestButGreater = null;
+
         for (Process p : RRProcesses) {
             if (p == current || p.remainingTime == 0)
                 continue;
 
-            if (bestButGreater == null){
-                if (p.arrivalTime > current.arrivalTime){
+            if (p.arrivalTime > currentTime)
+                continue;
+
+            if (bestButGreater == null) {
+
+                if (p.arrivalTime > current.arrivalTime) {
                     bestButGreater = p;
                 }
             }
-
-            if (best == null){
-                if (p.arrivalTime < current.arrivalTime){
-                    best = p;
-                }
+            if (p.arrivalTime < current.arrivalTime) {
+                best = p;
             }
         }
-        if (bestButGreater != null){return bestButGreater;}
-        if (best != null){return best;}
-        if (current.remainingTime > 0){return current;}
+
+        if (bestButGreater != null)
+            return bestButGreater;
+        if (best != null)
+            return best;
+        if (current.remainingTime > 0)
+            return current;
         return null;
     }
     public void calculateAVGs() {
@@ -83,12 +85,9 @@ public class RRController {
     public List<GanttBlock> buildGanttChart() {
 
         List<GanttBlock> chart = new ArrayList<>();
-
-
         GanttBlock previous = null;
 
-
-        Process firstProcess = getFirstProcess();
+        Process firstProcess = RRProcesses.get(0);
 
         GanttBlock currentBlock = new GanttBlock(
                 firstProcess,
@@ -130,7 +129,7 @@ public class RRController {
             }
 
 
-            Process next = getNextProcess(currentProcess);
+            Process next = getNextProcess(currentBlock);
 
             if (next != null) {
 
@@ -151,7 +150,7 @@ public class RRController {
     }
 
     public Result buildResult() {
-
+        sortProcessesByArrival();
         RRResult.ganttBlocks = buildGanttChart();
         calculateAVGs();
 
