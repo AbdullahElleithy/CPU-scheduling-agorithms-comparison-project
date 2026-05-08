@@ -10,7 +10,7 @@ import java.util.List;
 public class SRTFController {
 
     public String algorithmName;
-    private Result SRTFResult = new Result("SRTF algorith");
+    private Result SRTFResult = new Result("SRTF algorithm");
     public List<GanttBlock> ganttChartList;
     private List<Process> SRTFProcesses;
 

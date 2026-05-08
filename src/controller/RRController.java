@@ -9,7 +9,7 @@ import java.util.List;
 public class RRController {
     private List<Process> RRProcesses;
     private int RRQuantum;
-    private Result RRResult = new Result("Round Roubin algorith");
+    private Result RRResult = new Result("Round Roubin algorithm");
 
     public RRController(List<Process> processes, int quantum) {
         RRProcesses = processes;
