@@ -26,8 +26,9 @@ public class Process {
         this.waitingTime = waitingTime;
     }
 
-    public int getEffectiveRemainingTime(int agingInterval) {
-        int effective = remainingTime - waitingTime;
-        return Math.max(1, effective);
-    }
+    public int getEffectiveRemainingTime(int agingInterval) {        
+        int agingValue = waitingTime / agingInterval;       
+        int effective = remainingTime - agingValue;       
+        return Math.max(effective, 1);
+       }
 }

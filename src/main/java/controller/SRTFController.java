@@ -11,6 +11,7 @@ public class SRTFController {
 
     public String algorithmName;
     private Result SRTFResult = new Result("SRTF algorithm");
+    private static final int AGING_INTERVAL = 5;
     public List<GanttBlock> ganttChartList;
     private List<Process> SRTFProcesses;
 
@@ -51,7 +52,7 @@ public class SRTFController {
                 if (p.arrivalTime <= currentTime
                         && p.remainingTime > 0) {
 
-                    int effectiveTime = Math.max(1, p.remainingTime - p.getWaitingTime());
+                    int effectiveTime = p.getEffectiveRemainingTime(AGING_INTERVAL);
 
                     if (effectiveTime < minEffectiveRemainingTime) {
 
@@ -163,7 +164,6 @@ public class SRTFController {
         for (Process p : SRTFProcesses) {
             p.turnAroundTime = p.finish - p.arrivalTime;
             p.responseTime = p.firstStart - p.arrivalTime;
-            p.waitingTime = p.turnAroundTime - p.burstTime;
             totalWT += p.waitingTime;
             totalTAT += p.turnAroundTime;
             totalRT += p.responseTime;
@@ -173,3 +173,6 @@ public class SRTFController {
         SRTFResult.avgResponseTime = totalRT / n;
     }
 }
+
+
+
