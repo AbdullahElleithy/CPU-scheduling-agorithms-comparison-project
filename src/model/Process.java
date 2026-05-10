@@ -18,4 +18,17 @@ public class Process {
         this.burstTime = burstTime;
         this.remainingTime = burstTime;
     }
+    public int getWaitingTime() {
+    return waitingTime;
+    }
+
+    public void setWaitingTime(int waitingTime) {
+        this.waitingTime = waitingTime;
+    }
+
+    public int getEffectiveRemainingTime(int agingInterval) {        
+        int agingValue = waitingTime / agingInterval;       
+        int effective = remainingTime - agingValue;       
+        return Math.max(effective, 1);
+       }
 }
