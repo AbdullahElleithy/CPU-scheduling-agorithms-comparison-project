@@ -11,6 +11,7 @@ public class SRTFController {
 
     public String algorithmName;
     private Result SRTFResult = new Result("SRTF algorithm");
+    private static final int AGING_INTERVAL = 5;
     public List<GanttBlock> ganttChartList;
     private List<Process> SRTFProcesses;
 
@@ -27,6 +28,7 @@ public class SRTFController {
 
         for (Process p : SRTFProcesses) {
             p.remainingTime = p.burstTime;
+            p.waitingTime = 0;
         }
 
         SRTFResult.ganttBlocks = new ArrayList<>();
@@ -41,7 +43,7 @@ public class SRTFController {
         while (completed < n) {
 
             int shortestIdx = -1;
-            int minRemainingTime = Integer.MAX_VALUE;
+            int minEffectiveRemainingTime = Integer.MAX_VALUE;
 
             for (int i = 0; i < n; i++) {
 
@@ -50,12 +52,15 @@ public class SRTFController {
                 if (p.arrivalTime <= currentTime
                         && p.remainingTime > 0) {
 
-                    if (p.remainingTime < minRemainingTime) {
+                    int effectiveTime = p.getEffectiveRemainingTime(AGING_INTERVAL);
 
-                        minRemainingTime = p.remainingTime;
+
+                    if (p.remainingTime < minEffectiveRemainingTime) {
+
+                        minEffectiveRemainingTime = effectiveTime;
                         shortestIdx = i;
 
-                    } else if (p.remainingTime == minRemainingTime) {
+                    } else if (effectiveTime == minEffectiveRemainingTime) {
 
                         if (p.arrivalTime
                                 < SRTFProcesses.get(shortestIdx).arrivalTime) {
@@ -69,6 +74,14 @@ public class SRTFController {
             if (shortestIdx != -1) {
 
                 Process p = SRTFProcesses.get(shortestIdx);
+
+                for (Process q : SRTFProcesses) {
+                    if (q.arrivalTime <= currentTime && q.remainingTime > 0) {
+                        if (q != p) {
+                            q.setWaitingTime(q.getWaitingTime() + 1);
+                        }
+                    }
+                }
 
                 if (lastProcess == null
                         || !p.id.equals(lastProcess.id)) {

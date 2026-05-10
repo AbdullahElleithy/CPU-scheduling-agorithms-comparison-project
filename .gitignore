@@ -1,4 +1,8 @@
-.idea
-out
+
 CPU scheduling agorithms comparison project.iml
 CPU-scheduling-agorithms-comparison-project.iml
+pom.xml
+target/classes
+*.iml
+.idea
+.vscode
