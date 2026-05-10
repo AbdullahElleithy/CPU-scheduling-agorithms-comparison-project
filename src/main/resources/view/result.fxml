@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml"
+          fx:controller="controller.ResultController"
+          prefWidth="1000" prefHeight="600">
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50"/>
+        <ColumnConstraints percentWidth="50"/>
+    </columnConstraints>
+
+    <!-- LEFT -->
+    <VBox GridPane.columnIndex="0" spacing="10" alignment="TOP_CENTER">
+
+        <Label fx:id="leftTitle"
+               style="-fx-font-size: 18; -fx-font-weight: bold;" />
+
+        <TableView fx:id="leftTable" prefHeight="200">
+            <columns>
+                <TableColumn text="ID" fx:id="l_id"/>
+                <TableColumn text="AT" fx:id="l_at"/>
+                <TableColumn text="BT" fx:id="l_bt"/>
+                <TableColumn text="WT" fx:id="l_wt"/>
+                <TableColumn text="TAT" fx:id="l_tat"/>
+                <TableColumn text="RT" fx:id="l_rt"/>
+            </columns>
+        </TableView>
+
+        <!-- Gantt -->
+        <VBox spacing="0" alignment="CENTER_LEFT">
+            <HBox fx:id="leftGantt"
+                  spacing="0"
+                  prefHeight="60"
+                  style="-fx-border-color: black;"/>
+
+            <HBox fx:id="leftTimeline"
+                  spacing="0"/>
+        </VBox>
+
+        <!-- Averages -->
+        <VBox spacing="5">
+            <Label fx:id="leftAvgWT" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Label fx:id="leftAvgTAT" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Label fx:id="leftAvgRT" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+        </VBox>
+        <VBox spacing="5" style="-fx-padding: 10 0 0 0;">
+            <Label text="Conclusion:" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <Label fx:id="leftConclusion" wrapText="true" style="-fx-font-size: 14; -fx-font-style: italic; -fx-text-fill: #34495e;"/>
+        </VBox>
+
+    </VBox>
+
+    <!-- RIGHT -->
+    <VBox GridPane.columnIndex="1" spacing="10" alignment="TOP_CENTER">
+
+        <Label fx:id="rightTitle"
+               style="-fx-font-size: 18; -fx-font-weight: bold;" />
+
+        <TableView fx:id="rightTable" prefHeight="200">
+            <columns>
+                <TableColumn text="ID" fx:id="r_id"/>
+                <TableColumn text="AT" fx:id="r_at"/>
+                <TableColumn text="BT" fx:id="r_bt"/>
+                <TableColumn text="WT" fx:id="r_wt"/>
+                <TableColumn text="TAT" fx:id="r_tat"/>
+                <TableColumn text="RT" fx:id="r_rt"/>
+            </columns>
+        </TableView>
+
+        <!-- Gantt -->
+        <VBox spacing="0" alignment="CENTER_LEFT">
+            <HBox fx:id="rightGantt"
+                  spacing="0"
+                  prefHeight="60"
+                  style="-fx-border-color: black;"/>
+
+            <HBox fx:id="rightTimeline"
+                  spacing="0"/>
+        </VBox>
+
+        <!-- Averages -->
+        <VBox spacing="5">
+            <Label fx:id="rightAvgWT" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Label fx:id="rightAvgTAT" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Label fx:id="rightAvgRT" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+        </VBox>
+        <VBox spacing="5" style="-fx-padding: 10 0 0 0;">
+            <Label text="Conclusion:" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+            <Label fx:id="rightConclusion" wrapText="true" style="-fx-font-size: 14; -fx-font-style: italic; -fx-text-fill: #34495e;"/>
+        </VBox>
+
+    </VBox>
+
+    <Separator orientation="VERTICAL"
+               GridPane.columnSpan="2"
+               GridPane.halignment="CENTER"/>
+
+</GridPane>

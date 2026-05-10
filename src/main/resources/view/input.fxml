@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="12"
+      alignment="CENTER"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.MainController"
+      prefWidth="500" prefHeight="500">
+
+    <Label text="CPU Scheduling Simulator"
+           style="-fx-font-size: 18; -fx-font-weight: bold;" />
+
+    <HBox spacing="10">
+        <TextField fx:id="idField" promptText="Process ID" />
+        <TextField fx:id="arrivalField" promptText="Arrival Time" />
+        <TextField fx:id="burstField" promptText="Burst Time" />
+        <Button text="Add Process" onAction="#addProcess"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <TextField fx:id="quantumField" promptText="Quantum (RR)" />
+        <Button text="Run Simulation" onAction="#runSimulation"/>
+    </HBox>
+
+    <TextArea fx:id="outputArea"
+              prefHeight="320"
+              prefWidth="450"
+              editable="false"/>
+
+</VBox>
